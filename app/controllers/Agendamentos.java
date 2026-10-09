@@ -16,6 +16,7 @@ import security.Seguranca;
 @With(Seguranca.class) //faz com que  TODAS as actions desta classe exigem login
 public class Agendamentos extends Controller {
 
+	@Administrador
 	public static void form() {
 		Agendamento a = new Agendamento();
 		List<Laboratorio> laboratorios = Laboratorio.listarAtivos();
@@ -23,6 +24,7 @@ public class Agendamentos extends Controller {
 		render(a, laboratorios, professores);
 	}
 
+	@Administrador
 	public static void editar(Long id) {
 		Agendamento a = Agendamento.findById(id);
 		List<Laboratorio> laboratorios = Laboratorio.listarAtivos();
@@ -42,11 +44,13 @@ public class Agendamentos extends Controller {
 		render(agendamentos, termo);
 	}
 
+	
 	public static void detalhar(Long id) {
 		Agendamento agendamento = Agendamento.findById(id);
 		render(agendamento);
 	}
 
+	@Administrador
 	public static void salvar(@Valid Agendamento agendamento) {
 		if (validation.hasErrors()) {
 			Agendamento a = agendamento;

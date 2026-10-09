@@ -9,7 +9,7 @@ public class Seguranca extends Controller {
 	
 	// INTERCEPTADOR 1 : AUTENTICAÇÃO ("quem é você?")
 		// @Before = o Play roda este método ANTES de cada action dos controllers que usam @With(Seguranca.class).
-	@Before
+	@Before(priority =1 )//novo
 	static void auth() {
 		// Se não existe "usuarioLogado" na session, a pessoa não fez login.
 		if (!session.contains("usuarioLogado")) {
@@ -20,7 +20,7 @@ public class Seguranca extends Controller {
 	}
 	
 	// INTERCEPTADOR 2 : AUTORIZAÇÃO ("você tem permissão?")
-	@Before
+	@Before(priority = 2)//novo
 	static void verificarAdministrador() {
 		String perfil = session.get("perfilUsuario");
 		

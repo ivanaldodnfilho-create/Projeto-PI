@@ -7,9 +7,11 @@
         <p>Reserva #${agendamento.id}</p>
     </div>
     <div class="d-flex gap-2">
+     #{if session['perfilUsuario'] == 'ADMIN'}<!-- novo -->
         <a href="@{Agendamentos.editar(agendamento.id)}" class="btn btn-sal-outline">
             <i class="bi bi-pencil"></i> Editar
         </a>
+        #{/if}<!-- novo -->
         <a href="@{Agendamentos.listar()}" class="btn btn-sal-primary">
             <i class="bi bi-arrow-left"></i> Voltar
         </a>

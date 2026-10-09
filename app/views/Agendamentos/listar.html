@@ -6,9 +6,11 @@
         <h1>Agendamentos de laboratórios</h1>
         <p>Reservas ativas de laboratórios. Registros removidos não são exibidos.</p>
     </div>
+    #{if session['perfilUsuario'] == 'ADMIN'}<!-- novo -->
     <a href="@{Agendamentos.form()}" class="btn btn-sal-primary">
         <i class="bi bi-plus-circle"></i> Novo agendamento
     </a>
+    #{/if} <!-- novo -->
 </div>
 
 <div class="sal-card">
@@ -64,15 +66,16 @@
                                 <a href="@{Agendamentos.detalhar(a.id)}" class="btn btn-sal-outline" title="Detalhar">
                                     <i class="bi bi-eye"></i>
                                 </a>
+                                 #{if session['perfilUsuario'] == 'ADMIN'} <!-- novo -->
                                 <a href="@{Agendamentos.editar(a.id)}" class="btn btn-sal-outline" title="Editar">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                #{if session['perfilUsuario'] == 'ADMIN'}
+                                
                                 <a href="@{Agendamentos.remover(a.id)}" class="btn btn-outline-danger" title="Remover"
                                    onclick="return confirm('Remover o agendamento de ${a.nomeResponsavel}?');">
                                     <i class="bi bi-trash"></i>
                                 </a>
-                                #{/if}
+                                #{/if}<!-- novo -->
                             </div>
                         </td>
                     </tr>
@@ -89,7 +92,9 @@
             #{/if}
             #{else}
                 <p class="mb-1">Nenhum agendamento cadastrado.</p>
+                 #{if session['perfilUsuario'] == 'ADMIN'}<!-- novo -->
                 <a href="@{Agendamentos.form()}">Criar o primeiro agendamento</a>
+                #{/if}<!-- novo -->
             #{/else}
         </div>
     #{/else}
