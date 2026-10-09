@@ -50,7 +50,9 @@
                 <ul class="sal-nav">
                     <li><a href="@{Application.index()}" class="sal-nav-link"><i class="bi bi-house-door"></i> Início</a></li>
                     <li><a href="@{Agendamentos.listar()}" class="sal-nav-link"><i class="bi bi-calendar-week"></i> Agendamentos</a></li>
+                   #{if session['perfilUsuario'] == 'ADMIN'}  <!-- novo -->
                     <li><a href="@{Agendamentos.form()}" class="sal-nav-link"><i class="bi bi-plus-circle"></i> Novo agendamento</a></li>
+                    #{/if}  <!-- novo -->
                     <li><a href="@{Professores.listar()}" class="sal-nav-link"><i class="bi bi-person-badge"></i> Professores</a></li>
                     <li><a href="@{Laboratorios.listar()}" class="sal-nav-link"><i class="bi bi-building"></i> Laboratórios</a></li>
                 </ul>
