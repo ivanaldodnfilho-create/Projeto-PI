@@ -1,0 +1,96 @@
+#{extends 'main.html' /}
+#{set title:'Agendamentos' /}
+
+<div class="sal-page-header">
+    <div>
+        <h1>Agendamentos de laboratórios</h1>
+        <p>Reservas ativas de laboratórios. Registros removidos não são exibidos.</p>
+    </div>
+    <a href="@{Agendamentos.form()}" class="btn btn-sal-primary">
+        <i class="bi bi-plus-circle"></i> Novo agendamento
+    </a>
+</div>
+
+<div class="sal-card">
+    <div class="sal-card-header">
+        <h2><i class="bi bi-calendar-week"></i> Reservas</h2>
+        <form action="@{Agendamentos.listar}" method="get" class="sal-search">
+            <input type="text" class="form-control" name="termo" value="${termo}" placeholder="Buscar por nome ou email" />
+            <button type="submit" class="btn btn-sal-outline">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table sal-table">
+            <thead>
+                <tr>
+                    <th>Responsável</th>
+                    <th>Professor</th>
+                    <th>Laboratório</th>
+                    <th>Início</th>
+                    <th>Fim</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                #{list items:agendamentos, as:'a'}
+                    <tr>
+                        <td>
+                            <div class="fw-semibold text-dark">${a.nomeResponsavel}</div>
+                            <div class="small text-secondary">${a.email}</div>
+                        </td>
+                        <td>
+                            <span class="sal-tag"><i class="bi bi-person-badge"></i> ${a.professor?.nome ?: 'Sem professor'}</span>
+                        </td>
+                        <td>
+                            <span class="sal-tag"><i class="bi bi-building"></i> ${a.laboratorio?.nome ?: 'Sem laboratório'}</span>
+                        </td>
+                        <td>
+                            <div class="sal-datetime">
+                                <span class="sal-date">${a.dataHoraInicio?.format('dd/MM/yyyy')}</span>
+                                <span class="sal-time">${a.dataHoraInicio?.format('HH:mm')}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="sal-datetime">
+                                <span class="sal-date">${a.dataHoraFim?.format('dd/MM/yyyy')}</span>
+                                <span class="sal-time">${a.dataHoraFim?.format('HH:mm')}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="sal-actions">
+                                <a href="@{Agendamentos.detalhar(a.id)}" class="btn btn-sal-outline" title="Detalhar">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="@{Agendamentos.editar(a.id)}" class="btn btn-sal-outline" title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                #{if session['perfilUsuario'] == 'ADMIN'}
+                                <a href="@{Agendamentos.remover(a.id)}" class="btn btn-outline-danger" title="Remover"
+                                   onclick="return confirm('Remover o agendamento de ${a.nomeResponsavel}?');">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                                #{/if}
+                            </div>
+                        </td>
+                    </tr>
+                #{/list}
+            </tbody>
+        </table>
+    </div>
+    #{else}
+        <div class="sal-empty">
+            <i class="bi bi-calendar-x"></i>
+            #{if termo}
+                <p class="mb-1">Nenhum agendamento encontrado para "<strong>${termo}</strong>".</p>
+                <a href="@{Agendamentos.listar()}">Limpar busca</a>
+            #{/if}
+            #{else}
+                <p class="mb-1">Nenhum agendamento cadastrado.</p>
+                <a href="@{Agendamentos.form()}">Criar o primeiro agendamento</a>
+            #{/else}
+        </div>
+    #{/else}
+</div>

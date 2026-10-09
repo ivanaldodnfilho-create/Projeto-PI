@@ -1,0 +1,34 @@
+#{extends 'main.html' /}
+#{set title:'Alterar foto' /}
+
+<div class="sal-page-header">
+    <div>
+        <h1>Alterar foto</h1>
+        <p>Escolha a foto de ${p.nome}.</p>
+    </div>
+</div>
+
+<div class="sal-card">
+    <div class="sal-card-body">
+        <form action="/professores/salvarFoto" method="post" enctype="multipart/form-data" class="sal-form">
+
+            <input type="hidden" name="id" value="${p.id}" />
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="foto">Foto</label>
+                    <input type="file" id="foto" class="form-control" name="foto" accept="image/*" />
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-sal-primary">
+                    <i class="bi bi-check-lg"></i> Salvar foto
+                </button>
+                <a href="@{Professores.listar()}" class="btn btn-sal-outline">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

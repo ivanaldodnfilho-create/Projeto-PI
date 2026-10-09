@@ -1,0 +1,86 @@
+#{extends 'main.html' /}
+#{set title:'Cadastro de Professor' /}
+
+<div class="sal-page-header">
+    <div>
+        <h1>Novo professor</h1>
+        <p>Preencha os dados para cadastrar um professor e o acesso dele ao sistema.</p>
+    </div>
+</div>
+
+<div class="sal-card">
+    <div class="sal-card-body">
+
+        #{ifErrors}
+            <h4>Revise as informações do formulário</h4>
+        #{/ifErrors}
+
+        <form action="/professores/salvar" method="post" enctype="multipart/form-data" class="sal-form">
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="nome">Nome</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" id="nome" class="form-control" name="professor.nome"
+                               value="${p.nome}" placeholder="Nome completo" />
+                    </div>
+                    <span class="error">#{error 'professor.nome' /}</span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" for="email">E-mail</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="text" id="email" class="form-control" name="professor.email"
+                               value="${p.email}" placeholder="nome@ifrn.edu.br" />
+                    </div>
+                    <span class="error">#{error 'professor.email' /}</span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" for="matricula">Matrícula</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                        <input type="text" id="matricula" class="form-control" name="professor.matricula"
+                               value="${p.matricula}" />
+                    </div>
+                    <span class="error">#{error 'professor.matricula' /}</span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" for="foto">Foto</label>
+                    <input type="file" id="foto" class="form-control" name="professor.foto" />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" for="login">Login</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
+                        <input type="text" id="login" class="form-control" name="professor.login"
+                               value="${p.login}" />
+                    </div>
+                    <span class="error">#{error 'professor.login' /}</span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" for="senha">Senha</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" id="senha" class="form-control" name="professor.senha" />
+                    </div>
+                    <span class="error">#{error 'professor.senha' /}</span>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-sal-primary">
+                    <i class="bi bi-check-lg"></i> Salvar
+                </button>
+                <a href="@{Professores.listar()}" class="btn btn-sal-outline">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

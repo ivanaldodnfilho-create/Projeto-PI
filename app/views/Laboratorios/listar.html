@@ -1,0 +1,58 @@
+#{extends 'main.html' /}
+#{set title:'Laboratórios' /}
+
+<div class="sal-page-header">
+    <div>
+        <h1>Laboratórios</h1>
+        <p>Laboratórios disponíveis para agendamento.</p>
+    </div>
+    #{if session['perfilUsuario'] == 'ADMIN'}
+    <a href="@{Laboratorios.form()}" class="btn btn-sal-primary">
+        <i class="bi bi-plus-circle"></i> Novo laboratório
+    </a>
+    #{/if}
+</div>
+
+<div class="sal-card">
+    <div class="sal-card-header">
+        <h2><i class="bi bi-building"></i> Laboratórios</h2>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table sal-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Ramal</th>
+                    #{if session['perfilUsuario'] == 'ADMIN'}
+                    <th class="text-end">Ações</th>
+                    #{/if}
+                </tr>
+            </thead>
+            <tbody>
+                #{list items:laboratorios, as:'l'}
+                    <tr>
+                        <td class="fw-semibold text-dark">${l.nome}</td>
+                        <td>${l.ramal ?: '-'}</td>
+                        #{if session['perfilUsuario'] == 'ADMIN'}
+                        <td>
+                            <div class="sal-actions">
+                                <a href="@{Laboratorios.remover(l.id)}" class="btn btn-outline-danger" title="Remover"
+                                   onclick="return confirm('Remover o laboratório ${l.nome}?');">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                        #{/if}
+                    </tr>
+                #{/list}
+            </tbody>
+        </table>
+    </div>
+    #{else}
+        <div class="sal-empty">
+            <i class="bi bi-building-x"></i>
+            <p class="mb-1">Nenhum laboratório cadastrado.</p>
+        </div>
+    #{/else}
+</div>

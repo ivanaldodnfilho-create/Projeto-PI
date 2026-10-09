@@ -1,0 +1,52 @@
+#{extends 'main.html' /}
+#{set title:'Detalhamento do Agendamento' /}
+
+<div class="sal-page-header">
+    <div>
+        <h1>Detalhamento do agendamento</h1>
+        <p>Reserva #${agendamento.id}</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a href="@{Agendamentos.editar(agendamento.id)}" class="btn btn-sal-outline">
+            <i class="bi bi-pencil"></i> Editar
+        </a>
+        <a href="@{Agendamentos.listar()}" class="btn btn-sal-primary">
+            <i class="bi bi-arrow-left"></i> Voltar
+        </a>
+    </div>
+</div>
+
+<div class="sal-card">
+    <div class="sal-card-body">
+        <dl class="row sal-detail-list">
+            <div class="col-md-6">
+                <dt>Responsável</dt>
+                <dd>${agendamento.nomeResponsavel}</dd>
+            </div>
+            <div class="col-md-6">
+                <dt>E-mail</dt>
+                <dd>${agendamento.email}</dd>
+            </div>
+            <div class="col-md-6">
+                <dt>Professor</dt>
+                <dd><span class="sal-tag"><i class="bi bi-person-badge"></i> ${agendamento.professor?.nome ?: 'Sem professor'}</span></dd>
+            </div>
+            <div class="col-md-6">
+                <dt>Laboratório</dt>
+                <dd><span class="sal-tag"><i class="bi bi-building"></i> ${agendamento.laboratorio?.nome ?: 'Sem laboratório'}</span></dd>
+            </div>
+            <div class="col-md-6">
+                <dt>Ramal do laboratório</dt>
+                <dd>${agendamento.laboratorio?.ramal ?: '—'}</dd>
+            </div>
+            <div class="col-md-6">
+                <dt>Início</dt>
+                <dd>${agendamento.dataHoraInicio?.format('dd/MM/yyyy HH:mm')}</dd>
+            </div>
+            <div class="col-md-6">
+                <dt>Fim</dt>
+                <dd>${agendamento.dataHoraFim?.format('dd/MM/yyyy HH:mm')}</dd>
+            </div>
+        </dl>
+    </div>
+</div>

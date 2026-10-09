@@ -1,0 +1,83 @@
+#{extends 'main.html' /}
+#{set title:'Professores' /}
+
+<div class="sal-page-header">
+    <div>
+        <h1>Professores</h1>
+        <p>Professores cadastrados que podem realizar agendamentos.</p>
+    </div>
+    #{if session['perfilUsuario'] == 'ADMIN'}
+    <a href="@{Professores.form()}" class="btn btn-sal-primary">
+        <i class="bi bi-plus-circle"></i> Novo professor
+    </a>
+    #{/if}
+</div>
+
+<div class="sal-card">
+    <div class="sal-card-header">
+        <h2><i class="bi bi-person-badge"></i> Professores</h2>
+        <form action="@{Professores.listar}" method="get" class="sal-search">
+            <input type="text" class="form-control" name="termo" value="${termo}" placeholder="Buscar por nome ou email" />
+            <button type="submit" class="btn btn-sal-outline">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table sal-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Matrícula</th>
+                    <th>Perfil</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                #{list items:professores, as:'p'}
+                    <tr>
+                        <td class="fw-semibold text-dark">
+                            #{if p.foto?.exists()}
+                                <img src="@{Professores.verFoto(p.id)}" alt="Foto de ${p.nome}"
+                                     style="width:36px;height:36px;border-radius:50%;object-fit:cover;margin-right:8px;" />
+                            #{/if}
+                            ${p.nome}
+                        </td>
+                        <td>${p.email}</td>
+                        <td>${p.matricula ?: '-'}</td>
+                        <td><span class="sal-tag">${p.perfil}</span></td>
+                        <td>
+                            <div class="sal-actions">
+                                #{if session['perfilUsuario'] == 'ADMIN' || p.login == session['usuarioLogado']}
+                                <a href="@{Professores.formFoto(p.id)}" class="btn btn-sal-outline" title="Alterar foto">
+                                    <i class="bi bi-camera"></i>
+                                </a>
+                                #{/if}
+                                #{if session['perfilUsuario'] == 'ADMIN'}
+                                <a href="@{Professores.remover(p.id)}" class="btn btn-outline-danger" title="Remover"
+                                   onclick="return confirm('Remover o professor ${p.nome}?');">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                                #{/if}
+                            </div>
+                        </td>
+                    </tr>
+                #{/list}
+            </tbody>
+        </table>
+    </div>
+    #{else}
+        <div class="sal-empty">
+            <i class="bi bi-person-x"></i>
+            #{if termo}
+                <p class="mb-1">Nenhum professor encontrado para "<strong>${termo}</strong>".</p>
+                <a href="@{Professores.listar()}">Limpar busca</a>
+            #{/if}
+            #{else}
+                <p class="mb-1">Nenhum professor cadastrado.</p>
+            #{/else}
+        </div>
+    #{/else}
+</div>

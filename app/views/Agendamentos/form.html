@@ -1,0 +1,118 @@
+#{extends 'main.html' /}
+#{set title:'Cadastro de Agendamento' /}
+
+<div class="sal-page-header">
+    <div>
+        #{if a?.id}
+            <h1>Editar agendamento</h1>
+            <p>Atualize os dados da reserva #${a.id}.</p>
+        #{/if}
+        #{else}
+            <h1>Novo agendamento</h1>
+            <p>Preencha os dados para reservar um laboratório.</p>
+        #{/else}
+    </div>
+</div>
+
+<div class="sal-card">
+    <div class="sal-card-body">
+
+        #{ifErrors}
+            <h4>Revise as informações do formulário</h4>
+        #{/ifErrors}
+
+        <form action="/agendamentos/salvar" method="post" class="sal-form">
+
+            <input type="hidden" name="agendamento.id" value="${a.id}" />
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="nomeResponsavel">Nome do responsável</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" id="nomeResponsavel" class="form-control" name="agendamento.nomeResponsavel"
+                               value="${a.nomeResponsavel}" placeholder="Nome completo" />
+                    </div>
+                    <span class="error">#{error 'agendamento.nomeResponsavel' /}</span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" for="email">E-mail</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="text" id="email" class="form-control" name="agendamento.email"
+                               value="${a.email}" placeholder="nome@exemplo.com" />
+                    </div>
+                    <span class="error">#{error 'agendamento.email' /}</span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" for="dataHoraInicio">Data e hora de início</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        <input type="text" id="dataHoraInicio" class="form-control" name="agendamento.dataHoraInicio"
+                               value="${a.dataHoraInicio?.format('dd/MM/yyyy HH:mm')}" placeholder="dd/MM/yyyy HH:mm" />
+                    </div>
+                    <span class="error">#{error 'agendamento.dataHoraInicio' /}</span>
+                    <div class="sal-form-hint">Formato: dd/MM/aaaa HH:mm</div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" for="dataHoraFim">Data e hora de fim</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar-check"></i></span>
+                        <input type="text" id="dataHoraFim" class="form-control" name="agendamento.dataHoraFim"
+                               value="${a.dataHoraFim?.format('dd/MM/yyyy HH:mm')}" placeholder="dd/MM/yyyy HH:mm" />
+                    </div>
+                    <span class="error">#{error 'agendamento.dataHoraFim' /}</span>
+                    <div class="sal-form-hint">Formato: dd/MM/aaaa HH:mm</div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" for="laboratorio">Laboratório</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-building"></i></span>
+                        <select id="laboratorio" name="agendamento.laboratorio.id" class="form-select">
+                            #{list items:laboratorios, as:'l'}
+                                <option value="${l.id}" ${l.id == a.laboratorio?.id ? 'selected' : ''}>
+                                    ${l.nome}
+                                </option>
+                            #{/list}
+                        </select>
+                    </div>
+                    <span class="error">#{error 'agendamento.laboratorio' /}</span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" for="professor">Professor</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                        <select id="professor" name="agendamento.professor.id" class="form-select">
+                            <option value="">Selecione um professor</option>
+                            #{list items:professores, as:'p'}
+                                <option value="${p.id}" ${p.id == a.professor?.id ? 'selected' : ''}>
+                                    ${p.nome}
+                                </option>
+                            #{/list}
+                        </select>
+                    </div>
+                    <span class="error">#{error 'agendamento.professor' /}</span>
+                    #{if professores?.isEmpty()}
+                        <div class="sal-form-hint text-danger">
+                            Nenhum professor cadastrado. <a href="@{Professores.form()}">Cadastre um professor</a> primeiro.
+                        </div>
+                    #{/if}
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-sal-primary">
+                    <i class="bi bi-check-lg"></i> Salvar
+                </button>
+                <a href="@{Agendamentos.listar()}" class="btn btn-sal-outline">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

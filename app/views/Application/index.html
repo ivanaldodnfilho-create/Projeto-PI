@@ -1,0 +1,44 @@
+#{extends 'main.html' /}
+#{set title:'Início' /}
+
+<section class="sal-hero">
+    <div>
+        <h1>Agendamento de laboratórios em um só lugar</h1>
+        <p>Reserve horários, acompanhe as reservas ativas e consulte a disponibilidade dos laboratórios do campus.</p>
+    </div>
+    <a href="@{Agendamentos.form()}" class="btn btn-light fw-semibold">
+        <i class="bi bi-plus-circle"></i> Novo agendamento
+    </a>
+</section>
+
+<div class="sal-card">
+    <div class="sal-card-header">
+        <h2><i class="bi bi-list-check"></i> Acesso rápido</h2>
+    </div>
+    <div class="sal-card-body">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <a href="@{Agendamentos.listar()}" class="text-decoration-none">
+                    <div class="d-flex align-items-center gap-3 p-3 rounded-3 border sal-quick-link">
+                        <i class="bi bi-calendar-week fs-3 text-success"></i>
+                        <div>
+                            <div class="fw-semibold text-dark">Ver agendamentos</div>
+                            <div class="small text-secondary">Listar, buscar, editar ou remover reservas</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="@{Agendamentos.form()}" class="text-decoration-none">
+                    <div class="d-flex align-items-center gap-3 p-3 rounded-3 border sal-quick-link">
+                        <i class="bi bi-plus-circle fs-3 text-success"></i>
+                        <div>
+                            <div class="fw-semibold text-dark">Novo agendamento</div>
+                            <div class="small text-secondary">Reservar um laboratório para um horário</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

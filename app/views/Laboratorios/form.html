@@ -1,0 +1,52 @@
+#{extends 'main.html' /}
+#{set title:'Cadastro de Laboratório' /}
+
+<div class="sal-page-header">
+    <div>
+        <h1>Novo laboratório</h1>
+        <p>Preencha os dados para cadastrar um laboratório.</p>
+    </div>
+</div>
+
+<div class="sal-card">
+    <div class="sal-card-body">
+
+        #{ifErrors}
+            <h4>Revise as informações do formulário</h4>
+        #{/ifErrors}
+
+        <form action="/laboratorios/salvar" method="post" class="sal-form">
+
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <label class="form-label" for="nome">Nome</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-building"></i></span>
+                        <input type="text" id="nome" class="form-control" name="laboratorio.nome"
+                               value="${l.nome}" placeholder="Ex.: Laboratório de Informática 04" />
+                    </div>
+                    <span class="error">#{error 'laboratorio.nome' /}</span>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label" for="ramal">Ramal</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                        <input type="text" id="ramal" class="form-control" name="laboratorio.ramal"
+                               value="${l.ramal}" />
+                    </div>
+                    <span class="error">#{error 'laboratorio.ramal' /}</span>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-sal-primary">
+                    <i class="bi bi-check-lg"></i> Salvar
+                </button>
+                <a href="@{Laboratorios.listar()}" class="btn btn-sal-outline">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

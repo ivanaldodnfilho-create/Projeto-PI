@@ -1,0 +1,455 @@
+/* ==========================================================================
+   SAL — Sistema de Agendamento de Laboratórios
+   Identidade visual inspirada no SUAP/IFRN: verde institucional, topbar +
+   sidebar fixos, conteúdo em cards. Construído sobre Bootstrap 5.
+   ========================================================================== */
+
+:root {
+  /* Paleta — verde institucional (IFRN) com acento vermelho do brasão */
+  --sal-green-900: #063d20;
+  --sal-green-800: #0a5028;
+  --sal-green-700: #0c6e30;
+  --sal-green-600: #128a3d;
+  --sal-green-500: #2fa84f;
+  --sal-green-100: #e6f4ea;
+  --sal-red-600: #c1272d;
+
+  --sal-gray-900: #1f2422;
+  --sal-gray-700: #445049;
+  --sal-gray-600: #5b6863;
+  --sal-gray-300: #cdd6d1;
+  --sal-gray-200: #e3e8e5;
+  --sal-gray-100: #eef1ef;
+  --sal-gray-050: #f5f7f6;
+  --sal-white: #ffffff;
+
+  --sal-radius: 10px;
+  --sal-radius-sm: 6px;
+  --sal-shadow: 0 1px 2px rgba(6, 61, 32, .06), 0 4px 14px rgba(6, 61, 32, .06);
+  --sal-topbar-h: 60px;
+  --sal-sidebar-w: 240px;
+
+  --bs-body-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: var(--sal-gray-050);
+  color: var(--sal-gray-900);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--sal-green-700); text-decoration: none; }
+a:hover { color: var(--sal-green-900); }
+
+.sal-mono {
+  font-family: 'Roboto Mono', ui-monospace, monospace;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Topbar                                                                   */
+/* ---------------------------------------------------------------------- */
+.sal-topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--sal-topbar-h);
+  z-index: 1030;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: 0 1rem;
+  background: linear-gradient(180deg, var(--sal-green-800), var(--sal-green-900));
+  color: var(--sal-white);
+  box-shadow: 0 1px 0 rgba(0,0,0,.08);
+}
+
+.sal-sidebar-toggle {
+  background: transparent;
+  border: 0;
+  color: var(--sal-white);
+  font-size: 1.35rem;
+  line-height: 1;
+  padding: .25rem .4rem;
+  border-radius: var(--sal-radius-sm);
+}
+.sal-sidebar-toggle:hover { background: rgba(255,255,255,.12); }
+
+.sal-topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  min-width: 0;
+}
+
+.sal-topbar-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--sal-radius-sm);
+  background: var(--sal-green-500);
+  color: var(--sal-white);
+  font-family: 'Roboto Mono', ui-monospace, monospace;
+  font-weight: 700;
+  font-size: .8rem;
+  letter-spacing: .02em;
+  flex: none;
+}
+
+.sal-topbar-name {
+  font-weight: 600;
+  font-size: .95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sal-topbar-org {
+  margin-left: auto;
+  text-align: right;
+  line-height: 1.15;
+  padding-left: .75rem;
+  border-left: 1px solid rgba(255,255,255,.2);
+}
+.sal-topbar-org-name {
+  display: block;
+  font-weight: 700;
+  font-size: .85rem;
+  letter-spacing: .03em;
+}
+.sal-topbar-org-campus {
+  display: block;
+  font-size: .72rem;
+  color: rgba(255,255,255,.7);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Shell: sidebar + content                                                 */
+/* ---------------------------------------------------------------------- */
+.sal-shell {
+  display: flex;
+  min-height: 100vh;
+  padding-top: var(--sal-topbar-h);
+}
+
+.sal-sidebar {
+  position: fixed;
+  top: var(--sal-topbar-h);
+  bottom: 0;
+  left: 0;
+  width: var(--sal-sidebar-w);
+  background: var(--sal-green-900);
+  padding: 1rem .75rem;
+  z-index: 1025;
+  overflow-y: auto;
+  transition: transform .2s ease;
+}
+
+.sal-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+
+.sal-nav-link {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .6rem .75rem;
+  border-radius: var(--sal-radius-sm);
+  color: rgba(255,255,255,.82);
+  font-size: .9rem;
+  font-weight: 500;
+}
+.sal-nav-link i { font-size: 1.05rem; width: 1.1rem; text-align: center; }
+.sal-nav-link:hover {
+  background: rgba(255,255,255,.08);
+  color: var(--sal-white);
+}
+.sal-nav-link.active {
+  background: var(--sal-green-600);
+  color: var(--sal-white);
+}
+
+.sal-sidebar-backdrop {
+  display: none;
+}
+
+.sal-content {
+  flex: 1;
+  margin-left: var(--sal-sidebar-w);
+  padding: 1.5rem 1.75rem 3rem;
+  min-width: 0;
+}
+
+.sal-breadcrumb {
+  font-size: .82rem;
+  color: var(--sal-gray-600);
+  margin-bottom: 1rem;
+}
+.sal-breadcrumb a { color: var(--sal-gray-600); }
+.sal-breadcrumb a:hover { color: var(--sal-green-700); }
+.sal-breadcrumb-sep { margin: 0 .4rem; }
+
+.sal-alert { border-radius: var(--sal-radius-sm); border: 0; }
+.alert-success.sal-alert { background: var(--sal-green-100); color: var(--sal-green-900); }
+
+/* ---------------------------------------------------------------------- */
+/* Page header                                                              */
+/* ---------------------------------------------------------------------- */
+.sal-page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.sal-page-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--sal-gray-900);
+  margin: 0;
+}
+.sal-page-header p {
+  margin: .2rem 0 0;
+  color: var(--sal-gray-600);
+  font-size: .88rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Cards                                                                    */
+/* ---------------------------------------------------------------------- */
+.sal-card {
+  background: var(--sal-white);
+  border: 1px solid var(--sal-gray-200);
+  border-radius: var(--sal-radius);
+  box-shadow: var(--sal-shadow);
+}
+.sal-card-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--sal-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+.sal-card-header h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--sal-gray-900);
+}
+.sal-card-body { padding: 1.25rem; }
+
+/* ---------------------------------------------------------------------- */
+/* Search bar                                                               */
+/* ---------------------------------------------------------------------- */
+.sal-search {
+  display: flex;
+  gap: .5rem;
+  flex: 1;
+  min-width: 220px;
+  max-width: 420px;
+}
+.sal-search .form-control {
+  border-radius: var(--sal-radius-sm);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Buttons                                                                  */
+/* ---------------------------------------------------------------------- */
+.btn-sal-primary {
+  background: var(--sal-green-600);
+  border-color: var(--sal-green-600);
+  color: var(--sal-white);
+}
+.btn-sal-primary:hover {
+  background: var(--sal-green-700);
+  border-color: var(--sal-green-700);
+  color: var(--sal-white);
+}
+.btn-sal-outline {
+  border-color: var(--sal-gray-300);
+  color: var(--sal-gray-700);
+  background: var(--sal-white);
+}
+.btn-sal-outline:hover {
+  background: var(--sal-gray-100);
+  border-color: var(--sal-gray-300);
+  color: var(--sal-gray-900);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Table                                                                    */
+/* ---------------------------------------------------------------------- */
+.sal-table {
+  margin: 0;
+  font-size: .88rem;
+}
+.sal-table thead th {
+  background: var(--sal-gray-050);
+  color: var(--sal-gray-600);
+  text-transform: uppercase;
+  font-size: .72rem;
+  letter-spacing: .04em;
+  font-weight: 700;
+  border-bottom: 1px solid var(--sal-gray-200);
+  padding: .7rem .9rem;
+  white-space: nowrap;
+}
+.sal-table tbody td {
+  padding: .8rem .9rem;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--sal-gray-100);
+}
+.sal-table tbody tr:last-child td { border-bottom: 0; }
+.sal-table tbody tr:hover { background: var(--sal-green-100); }
+
+.sal-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .25rem .55rem;
+  border-radius: var(--sal-radius-sm);
+  background: var(--sal-gray-100);
+  color: var(--sal-gray-700);
+  font-family: 'Roboto Mono', ui-monospace, monospace;
+  font-size: .76rem;
+  font-weight: 500;
+}
+.sal-tag i { color: var(--sal-green-600); }
+
+.sal-datetime {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.sal-datetime .sal-date { font-weight: 600; color: var(--sal-gray-900); font-size: .84rem; }
+.sal-datetime .sal-time { color: var(--sal-gray-600); font-size: .76rem; }
+
+.sal-actions { display: flex; gap: .35rem; justify-content: flex-end; }
+.sal-actions .btn { padding: .32rem .55rem; font-size: .95rem; line-height: 1; }
+
+/* Empty state */
+.sal-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--sal-gray-600);
+}
+.sal-empty i { font-size: 2.2rem; color: var(--sal-gray-300); display: block; margin-bottom: .75rem; }
+
+/* ---------------------------------------------------------------------- */
+/* Forms                                                                    */
+/* ---------------------------------------------------------------------- */
+.sal-form .form-label {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--sal-gray-700);
+}
+.sal-form .form-control,
+.sal-form .form-select {
+  border-radius: var(--sal-radius-sm);
+  border-color: var(--sal-gray-300);
+  padding: .55rem .75rem;
+}
+.sal-form .form-control:focus,
+.sal-form .form-select:focus {
+  border-color: var(--sal-green-600);
+  box-shadow: 0 0 0 .2rem rgba(18, 138, 61, .15);
+}
+.sal-form .input-group-text {
+  background: var(--sal-gray-050);
+  border-color: var(--sal-gray-300);
+  color: var(--sal-gray-600);
+}
+.sal-form-hint {
+  font-size: .76rem;
+  color: var(--sal-gray-600);
+  margin-top: .25rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Detail view                                                              */
+/* ---------------------------------------------------------------------- */
+.sal-detail-list { margin: 0; }
+.sal-detail-list dt {
+  font-size: .74rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--sal-gray-600);
+  font-weight: 700;
+  margin-bottom: .15rem;
+}
+.sal-detail-list dd {
+  font-size: .95rem;
+  color: var(--sal-gray-900);
+  margin-bottom: 1.1rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Home / dashboard                                                         */
+/* ---------------------------------------------------------------------- */
+.sal-hero {
+  background: linear-gradient(135deg, var(--sal-green-700), var(--sal-green-900));
+  color: var(--sal-white);
+  border-radius: var(--sal-radius);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.sal-hero h1 { font-size: 1.5rem; font-weight: 700; margin: 0 0 .4rem; }
+.sal-hero p { margin: 0; color: rgba(255,255,255,.8); font-size: .92rem; max-width: 46ch; }
+
+.sal-quick-link {
+  border-color: var(--sal-gray-200) !important;
+  transition: border-color .15s ease, background .15s ease;
+}
+.sal-quick-link:hover {
+  border-color: var(--sal-green-500) !important;
+  background: var(--sal-green-100);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Responsive                                                               */
+/* ---------------------------------------------------------------------- */
+@media (max-width: 991.98px) {
+  .sal-sidebar {
+    transform: translateX(-100%);
+    box-shadow: 4px 0 18px rgba(0,0,0,.15);
+  }
+  body.sal-sidebar-open .sal-sidebar { transform: translateX(0); }
+  body.sal-sidebar-open .sal-sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: var(--sal-topbar-h) 0 0 0;
+    background: rgba(6,61,32,.35);
+    z-index: 1020;
+  }
+  .sal-content { margin-left: 0; padding: 1.25rem 1rem 3rem; }
+  .sal-topbar-org-campus { display: none; }
+}
+
+@media (max-width: 575.98px) {
+  .sal-hero { padding: 1.5rem; }
+  .sal-actions { flex-wrap: wrap; }
+}
+
+.error {
+	color: #ff0000;
+}
